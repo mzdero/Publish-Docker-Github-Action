@@ -27,6 +27,10 @@ function main() {
     changeWorkingDirectory
   fi
 
+  if uses "${INPUT_DOCKERHUB_USERNAME}" && uses "${INPUT_DOCKERHUB_PASSWORD}"; then
+    echo ${INPUT_DOCKERHUB_PASSWORD} | docker login -u ${INPUT_DOCKERHUB_USERNAME} --password-stdin
+  fi
+
   echo ${INPUT_PASSWORD} | docker login -u ${INPUT_USERNAME} --password-stdin ${INPUT_REGISTRY}
 
   BUILDPARAMS=""

@@ -38,6 +38,12 @@ inputs:
   tag_names:
     description: 'Use tag_names when you want to push tags/release by their git name'
     required: false
+  dockerhub_username:
+    description: 'Dockerhub username, if auth is needed for pulling the image'
+    required: false
+  dockerhub_password:
+    description: 'Dockerhub password, if auth is needed for pulling the image'
+    required: false
 outputs:
   tag:
     description: 'Is the tag, which was pushed'
