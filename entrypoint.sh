@@ -70,23 +70,10 @@ function isPartOfTheName() {
 }
 
 function translateDockerTag() {
-  local BRANCH=$(echo ${GITHUB_REF} | sed -e "s/refs\/heads\///g" | sed -e "s/\//-/g" | sed -e 's/[^ -~]//g')
-  if hasCustomTag; then
-    TAG=$(echo ${INPUT_NAME} | cut -d':' -f2)
-    INPUT_NAME=$(echo ${INPUT_NAME} | cut -d':' -f1)
-  elif isOnMaster; then
-    TAG="latest"
-  elif isGitTag && usesBoolean "${INPUT_TAG_NAMES}"; then
+  if isGitTag && usesBoolean "${INPUT_TAG_NAMES}"; then
     TAG=$(echo ${GITHUB_REF} | sed -e "s/refs\/tags\///g")
-  elif isGitTag; then
-    TAG="latest"
-  elif isPullRequest; then
-    BRANCH=$(echo ${GITHUB_HEAD_REF} | sed -e "s/refs\/heads\///g" | sed -e "s/\//-/g" | sed -e 's/[^ -~]//g')
-    TAG="${BRANCH}"
-  elif isReleaseBranch; then
-    TAG=$(echo "${GITHUB_REF}-rc" | sed -e "s/refs\/heads\/release\///g")
   else
-    TAG="${BRANCH}"
+    TAG="${GITHUB_SHA}"
   fi;
 }
 
